@@ -1,0 +1,47 @@
+server:
+  port: 8880
+spring:
+  application:
+    name: elk-customer-service
+  data:
+    # mongodb
+    mongodb:
+#      host: 10.2.1.66
+      host: localhost
+      port: 27017
+      database: elk
+  # 设置json格式
+  jackson:
+    # 属性为空时，不进行序列化
+    default-property-inclusion: non_null
+    # 指定日期格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    # 状态页面
+    status-page-url: http://${eureka.instance.instance-id}/swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+# 日志文件
+logging:
+  file: 'logs/elk-customer-service.log'
+
+
+
+
+
+
+

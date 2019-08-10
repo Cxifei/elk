@@ -1,0 +1,42 @@
+server:
+  port: 4000
+spring:
+  application:
+    name: elk-zuul-service
+zuul:
+  # 忽略服务器
+  ignored-services: '*'
+  host:
+    # 超时时间
+    connect-timeout-millis: 2000
+    socket-timeout-millis: 10000
+  # 路由在请求转发时会将某些请求拦截，所以需要放行某些应用可能需要的cookie
+  sensitiveHeaders: Cookie,Set-Cookie
+  # 路由规则
+  routes:
+    customer-service:
+      # 访问路径格式
+      path: /customer/**
+      serviceId: elk-customer-service
+    user-service:
+      path: /user/**
+      serviceId: elk-user-service
+
+management:
+  endpoint:
+    # 健康信息显示
+    health:
+      show-details: always
+  endpoints:
+    web:
+      # 开启web所有的监控点
+      exposure:
+        include: '*'
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+
+
+

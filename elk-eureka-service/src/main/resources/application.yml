@@ -1,0 +1,20 @@
+# 服务端口号
+server:
+  port: 8761
+spring:
+  # 应用的名称
+  application:
+    name: elk-eureka-service
+eureka:
+  instance:
+  # 显示IP地址
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+  # 是否到注册中心拉取列表数据
+    fetch-registry: false
+  # 是否注册到eureka
+    register-with-eureka: false
+  # 注册中心的地址
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:${server.port}/eureka/

@@ -1,0 +1,35 @@
+server:
+  port: 8881
+spring:
+  application:
+    name: elk-user-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/elk-user?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimeZone=Asia/Shanghai
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    status-page-url: ${eureka.instance.instance-id}/swagger-ui.html
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  file: 'logs/elk-user-service.log'
